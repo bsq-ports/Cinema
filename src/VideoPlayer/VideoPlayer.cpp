@@ -52,6 +52,9 @@ static int decode_packet(AVPacket * pPacket, AVCodecContext * pCodecContext, AVF
 
         if (response >= 0) {
             getLogger().debug("Frame %d (type=%c, size=%d bytes, format=%d) pts %ld key_frame %d [DTS %d]", pCodecContext -> frame_number, av_get_picture_type_char(pFrame -> pict_type), pFrame->pkt_size, pFrame->format, pFrame->pts, pFrame->key_frame, pFrame->coded_picture_number);
+            
+            char frame_filename[1024];
+        snprintf(frame_filename, sizeof(frame_filename), "/sdcard/%s-%d.pgm", "frame", pCodecContext->frame_number);
 
             if (pFrame->format != AV_PIX_FMT_YUV420P)
             {

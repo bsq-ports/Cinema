@@ -66,7 +66,7 @@ static int decode_packet(AVPacket * pPacket, AVCodecContext * pCodecContext, AVF
     return 0;
 }
 
-void Cinema::VideoPlayer::Preload(std::string filename, bool _audio)
+void Cinema::VideoPlayer::Preload(std::string const& filename, bool _audio)
 {
     audio = _audio;
     playing = false;
@@ -91,7 +91,7 @@ void Cinema::VideoPlayer::Preload(std::string filename, bool _audio)
         return;
     }
 
-    AVCodec *pCodec = NULL;
+    AVCodec const* pCodec = NULL;
     AVCodecParameters *pCodecParameters =  NULL;
     int video_stream_index = -1;
 
@@ -106,7 +106,7 @@ void Cinema::VideoPlayer::Preload(std::string filename, bool _audio)
 
         getLogger().debug("finding the proper decoder (CODEC)");
 
-        AVCodec *pLocalCodec = NULL;
+        AVCodec const* pLocalCodec = NULL;
 
         pLocalCodec = avcodec_find_decoder(pLocalCodecParameters->codec_id);
 

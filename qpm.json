@@ -6,12 +6,14 @@
     "id": "cinema",
     "version": "0.1.0",
     "url": null,
-    "additionalData": {}
+    "additionalData": {
+      "overrideSoName": "libcinema.so"
+    }
   },
   "dependencies": [
     {
       "id": "beatsaber-hook",
-      "versionRange": "=2.3.2",
+      "versionRange": "^3.0.0",
       "additionalData": {
         "extraFiles": [
           "src/inline-hook"
@@ -25,7 +27,7 @@
     },
     {
       "id": "codegen",
-      "versionRange": "^0.14.0",
+      "versionRange": "^0.18.0",
       "additionalData": {}
     },
     {
@@ -35,7 +37,7 @@
     },
     {
       "id": "custom-types",
-      "versionRange": "^0.12.0",
+      "versionRange": "^0.14.1",
       "additionalData": {}
     }
   ],

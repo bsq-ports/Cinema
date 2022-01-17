@@ -45,7 +45,7 @@ MAKE_HOOK_MATCH(MainMenu, &GlobalNamespace::MainMenuViewController::DidActivate,
     getLogger().info("yes");
 	GameObject* Mesh = GameObject::CreatePrimitive(PrimitiveType::Plane);
 	getLogger().info("yes 2");
-	Mesh->GetComponent<Renderer*>()->set_material(Material::New_ctor(Shader::Find(il2cpp_utils::createcsstr("Unlit/Texture"))));
+	Mesh->GetComponent<Renderer*>()->set_material(Material::New_ctor(Shader::Find(il2cpp_utils::newcsstr("Unlit/Texture"))));
 	getLogger().info("yes 3");
 	Mesh->get_transform()->set_position(UnityEngine::Vector3{0.0f, 1.0f, 0.0f});
 	getLogger().info("yes 4");

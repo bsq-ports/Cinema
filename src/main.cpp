@@ -8,8 +8,15 @@
 #include "UnityEngine/Vector3.hpp"
 #include "UnityEngine/Quaternion.hpp"
 #include "UnityEngine/MeshRenderer.hpp"
+#include "UnityEngine/Renderer.hpp"
 #include "UnityEngine/Component.hpp"
-#include "VideoPlayer/VideoPlayer.hpp"
+#include "UnityEngine/Video/VideoPlayer.hpp"
+#include "UnityEngine/Video/VideoClip.hpp"
+#include "UnityEngine/Video/VideoRenderMode.hpp"
+#include "UI/VideoMenuViewController.hpp"
+#include "questui/shared/QuestUI.hpp"
+
+#include "VideoPlayer.hpp"
 
 using namespace UnityEngine;
 using namespace GlobalNamespace;
@@ -47,19 +54,35 @@ MAKE_HOOK_MATCH(MainMenu, &GlobalNamespace::MainMenuViewController::DidActivate,
 	getLogger().info("yes 2");
 	Mesh->GetComponent<Renderer*>()->set_material(Material::New_ctor(Shader::Find(il2cpp_utils::newcsstr("Unlit/Texture"))));
 	getLogger().info("yes 3");
-	Mesh->get_transform()->set_position(UnityEngine::Vector3{0.0f, 1.0f, 0.0f});
+	Mesh->get_transform()->set_position(Vector3{0.0f, 1.0f, 30.0f});
 	getLogger().info("yes 4");
-	Mesh->get_transform()->set_rotation(Quaternion::Euler(90.0f, 180.0f, 90.0f));
+	Mesh->get_transform()->set_rotation(Quaternion::Euler(90.0f, 270.0f, 90.0f));
 	getLogger().info("yes 5");
 
-    Cinema::VideoPlayer* n = Mesh->AddComponent<Cinema::VideoPlayer*>();
-    n->Preload("/sdcard/video.mp4", false);
+    auto renderer = Mesh->GetComponent<Renderer*>();
+
+    getLogger().info("making videoplayer");
+    auto videoPlayer = Mesh->AddComponent<Cinema::VideoPlayer*>();
+    getLogger().info("settings looping");
+    videoPlayer->set_isLooping(true);
+    getLogger().info("settings playOnAwaking");
+    videoPlayer->set_playOnAwake(true);
+    getLogger().info("settings rendermode");
+    videoPlayer->set_renderMode(Video::VideoRenderMode::MaterialOverride);
+    getLogger().info("settings renderer");
+    if(renderer)
+        videoPlayer->set_renderer(renderer);
+    getLogger().info("setting url");
+    videoPlayer->set_url("/sdcard/video.mp4");
+    getLogger().info("done");
 }
 
 // Called later on in the game loading - a good time to install function hooks
 extern "C" void load() {
     il2cpp_functions::Init();
     INSTALL_HOOK(getLogger(), MainMenu);
+
+    //QuestUI::Register::RegisterGameplaySetupMenu<Cinema::VideoMenuViewController*>(modInfo, "Cinema", QuestUI::Register::MenuType::Solo);
 
 	custom_types::Register::AutoRegister();
 }

@@ -49,3 +49,6 @@ Android.mk.backup
 qpm.shared.json
 
 ffmpeg/
+cmake-build-debug/
+build/
+.idea/

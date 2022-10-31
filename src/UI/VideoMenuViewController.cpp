@@ -67,11 +67,11 @@ static auto CreateButtonWithIcon(RenderContext& ctx, RenderContextChildData& dat
             buttonGameObject->GetComponent<UI::Button*>()->set_interactable(true);
             buttonGameObject->GetComponent<UI::Button*>()->set_onClick(UI::Button::ButtonClickedEvent::New_ctor());
 
-            std::function<void()> function = []() {
+            //std::function<void()> function = []() {
                 //DELETE VIDEO
-            };
+            //};
 
-            buttonGameObject->GetComponent<UI::Button*>()->get_onClick()->AddListener(il2cpp_utils::MakeDelegate<Events::UnityAction*>(classof(Events::UnityAction*), function));
+            //buttonGameObject->GetComponent<UI::Button*>()->get_onClick()->AddListener(il2cpp_utils::MakeDelegate<Events::UnityAction*>(classof(Events::UnityAction*), function));
             button = buttonGameObject->GetComponent<UI::Button*>();
         }
 

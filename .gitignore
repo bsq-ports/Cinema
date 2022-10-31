@@ -42,13 +42,19 @@ out/
 [Oo]bj/
 [Oo]bjs/
 ndkpath.txt
-*.zip
-*.txt
-extern/
-Android.mk.backup
+
+extern
+
 qpm.shared.json
 
+Android.mk.backup
+/.vs
+build/
+extern.cmake
+qpm_defines.cmake
+mod.json
+*.log
+*.qmod
+tombstone*
 ffmpeg/
 cmake-build-debug/
-build/
-.idea/

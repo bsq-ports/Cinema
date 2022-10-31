@@ -4,8 +4,8 @@
   "info": {
     "name": "Cinema",
     "id": "cinema",
-    "version": "0.1.0",
-    "url": null,
+    "version": "0.0.1",
+    "url": "https://github.com/bsq-ports/Cinema",
     "additionalData": {
       "overrideSoName": "libcinema.so"
     }
@@ -13,7 +13,7 @@
   "dependencies": [
     {
       "id": "beatsaber-hook",
-      "versionRange": "^3.7.4",
+      "versionRange": "^3.14.0",
       "additionalData": {
         "extraFiles": [
           "src/inline-hook"
@@ -22,27 +22,32 @@
     },
     {
       "id": "config-utils",
-      "versionRange": "*",
+      "versionRange": "^0.8.0",
       "additionalData": {}
     },
     {
       "id": "codegen",
-      "versionRange": "^0.22.0",
+      "versionRange": "^0.28.0",
       "additionalData": {}
     },
     {
       "id": "questui",
-      "versionRange": "*",
+      "versionRange": "^0.17.3",
       "additionalData": {}
     },
     {
       "id": "custom-types",
-      "versionRange": "*",
+      "versionRange": "^0.15.21",
       "additionalData": {}
     },
     {
       "id": "questui_components",
-      "versionRange": "^2.5.0",
+      "versionRange": "^2.5.4",
+      "additionalData": {}
+    },
+    {
+      "id": "pythonlib",
+      "versionRange": "^0.1.0",
       "additionalData": {}
     }
   ],

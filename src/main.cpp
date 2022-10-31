@@ -37,7 +37,6 @@ static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to 
 // Loads the config from disk using our modInfo, then returns it for use
 Configuration& getConfig() {
     static Configuration config(modInfo);
-    config.Load();
     return config;
 }
 
@@ -111,8 +110,12 @@ MAKE_HOOK_MATCH(SetupSongUI, &GlobalNamespace::AudioTimeSyncController::StartSon
 
     videoPlayer->Prepare();
 
-    GlobalNamespace::SharedCoroutineStarter::get_instance()->StartCoroutine(custom_types::Helpers::CoroutineHelper::New(coroutine(videoPlayer, self->dyn__audioSource())));
+    GlobalNamespace::SharedCoroutineStarter::get_instance()->StartCoroutine(custom_types::Helpers::CoroutineHelper::New(coroutine(videoPlayer, self->audioSource)));
 }
+
+#include "pythonlib/shared/Python.hpp"
+#include "pythonlib/shared/Utils/FileUtils.hpp"
+#include "assets.hpp"
 
 // Called later on in the game loading - a good time to install function hooks
 extern "C" void load() {
@@ -125,4 +128,34 @@ extern "C" void load() {
     QuestUI::Register::RegisterGameplaySetupMenu<Cinema::VideoMenuViewController*>(modInfo, "Cinema", QuestUI::Register::MenuType::Solo);
 
 	custom_types::Register::AutoRegister();
+
+    auto eventHandler = [](int type, char* data) {
+        switch (type) {
+        case 0:
+            {
+                std::string dataString(data);
+                if(dataString.find("[download]", 0) != -1) {
+                    auto pos = dataString.find("%", 0);
+                    if(pos != -1 && pos > 5) {
+                        auto percentange = dataString.substr(pos-5, 5);
+                        if(percentange.find("]", 0) == 0) 
+                            percentange = percentange.substr(1);
+                        getLogger().info("Percentage: %s", percentange.c_str());
+                    }
+                }
+            }
+            break;
+        case 1:
+            getLogger().info("Error: %s", data);
+            break;
+        }
+    
+    };
+
+    Python::PythonWriteEvent += eventHandler;
+    std::string ytdlp = FileUtils::getScriptsPath() + "/ytdlp";
+    if(!fileexists(ytdlp))
+        writefile(ytdlp, IncludedAssets::ytdlp_zip);
+    getLogger().info("Python::RunCommand Result: %d", Python::RunCommand(ytdlp + " --no-cache-dir -P /sdcard https://youtu.be/SnP0Nqp455I"));
+    //Python::PythonWriteEvent -= eventHandler;
 }
